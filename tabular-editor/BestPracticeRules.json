@@ -1,0 +1,62 @@
+[
+  {
+    "ID": "GOV_MEASURE_FORMAT_STRING",
+    "Name": "[Formatting] Provide a format string for visible measures",
+    "Category": "Formatting",
+    "Description": "Visible measures should have a format string so they display consistently in every report.",
+    "Severity": 2,
+    "Scope": "Measure",
+    "Expression": "IsHidden = false and string.IsNullOrWhitespace(FormatString)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "GOV_MEASURE_DESCRIPTION",
+    "Name": "[Governance] Document visible measures with a description",
+    "Category": "Governance",
+    "Description": "Every visible measure needs a business definition in its description so it can be certified and maintained.",
+    "Severity": 2,
+    "Scope": "Measure",
+    "Expression": "IsHidden = false and string.IsNullOrWhitespace(Description)",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "GOV_NO_FLOATING_POINT",
+    "Name": "[Performance] Do not use floating point data types",
+    "Category": "Performance",
+    "Description": "Floating point columns can produce rounding surprises and compress poorly. Use Decimal or Integer where possible.",
+    "Severity": 2,
+    "Scope": "DataColumn, CalculatedColumn",
+    "Expression": "DataType = \"Double\"",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "GOV_NO_BIDIRECTIONAL",
+    "Name": "[Performance] Avoid bidirectional relationships",
+    "Category": "Performance",
+    "Description": "Bidirectional cross-filtering can create ambiguity and slow queries. If it is required, justify it in the relationship description.",
+    "Severity": 2,
+    "Scope": "Relationship",
+    "Expression": "CrossFilteringBehavior = \"BothDirections\"",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "GOV_NO_MANY_TO_MANY",
+    "Name": "[Modeling] Avoid many-to-many relationships",
+    "Category": "Modeling",
+    "Description": "Many-to-many relationships make grain and totals harder to reason about. Prefer a bridge table with a documented grain.",
+    "Severity": 2,
+    "Scope": "Relationship",
+    "Expression": "FromCardinality = \"Many\" and ToCardinality = \"Many\"",
+    "CompatibilityLevel": 1200
+  },
+  {
+    "ID": "GOV_DO_NOT_SUMMARIZE_NUMERIC",
+    "Name": "[Formatting] Do not summarize visible numeric columns",
+    "Category": "Formatting",
+    "Description": "Numeric columns that authors should not add up (identifiers, years, codes) should have Summarize By set to None. Use explicit measures for aggregation.",
+    "Severity": 1,
+    "Scope": "DataColumn, CalculatedColumn",
+    "Expression": "(DataType = \"Int64\" or DataType = \"Decimal\" or DataType = \"Double\") and IsHidden = false and SummarizeBy <> \"None\"",
+    "CompatibilityLevel": 1200
+  }
+]
